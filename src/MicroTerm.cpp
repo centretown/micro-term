@@ -124,20 +124,21 @@ bool MicroTerm::ready()
         }
     }
 
-    // do one of these functions per loop cycle
-    // even if all 3 are applicable
-    if (echo_count < in_count)
-    {
-        print(in + echo_count);
-    }
-    else if (overflow_detected)
+    if (overflow_detected)
     {
         overflow();
     }
-    else if (prompt_user)
+    else if (user_on)
     {
-        blink();
-        prompt();
+        if (echo_count < in_count)
+        {
+            print(in + echo_count);
+        }
+        else if (prompt_user)
+        {
+            blink();
+            prompt();
+        }
     }
 
     return command_ready;

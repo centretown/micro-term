@@ -17,6 +17,7 @@ private:
     bool overflow_detected = false;
     bool prompt_user = true;
     bool command_ready = false;
+    bool user_on = true;
 
     void reset();
     void prompt();
@@ -40,4 +41,5 @@ public:
     const char *get();
     size_t println(const char *);
     size_t print(const char *s);
+    void user(bool on) { user_on = on; }
 };
