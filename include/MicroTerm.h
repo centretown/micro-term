@@ -7,11 +7,11 @@ class MicroTerm
 {
 private:
     Stream &serial;
+    char *in;
+    size_t in_size;
 
-    static const size_t in_size = 256;
     char prompt_text[8] = {0};
-    char command[in_size] = {0};
-    char in[in_size] = {0};
+    char command[81] = {0};
     size_t in_count = 0;
     uint8_t led_state = HIGH;
     bool overflow_detected = false;
@@ -25,7 +25,14 @@ private:
     size_t print(char);
 
 public:
-    MicroTerm(Stream &serial) : serial(serial) {}
+    MicroTerm(Stream &serial,
+              char *in,
+              size_t in_size) : serial(serial),
+                                in(in),
+                                in_size(in_size)
+    {
+        memset(in, 0, in_size);
+    }
     ~MicroTerm() {}
 
     void setup(const char *p);
