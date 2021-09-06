@@ -2,17 +2,17 @@
 
 #include <MicroTerm.h>
 
-void MicroTerm::setup(const char *p)
+void MicroTerm::setup(const char *prefix)
 {
-    int len = strlen(p);
-    const char *dot = strrchr(p, '.');
-    if (dot == NULL)
-    {
-        dot = p + len - 3;
-    }
     // keep prefix short
-    strncpy(prefix, dot, sizeof(prefix));
-    strncat(prefix, "> ", sizeof(prefix));
+    int len = strlen(prefix);
+    if (len < 3)
+    {
+        prefix = "unk";
+    }
+    const char *pre = prefix + len - 3;
+    strncpy(prompt_text, pre, sizeof(prompt_text));
+    strncat(prompt_text, "> ", sizeof(prompt_text));
     serial.flush();
 }
 
@@ -27,7 +27,7 @@ void MicroTerm::prompt()
     if (prompt_user)
     {
         println("");
-        print(prefix);
+        print(prompt_text);
         prompt_user = false;
     }
 }
@@ -136,7 +136,6 @@ bool MicroTerm::ready()
         }
         else if (prompt_user)
         {
-            blink();
             prompt();
         }
     }

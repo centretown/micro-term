@@ -7,9 +7,9 @@ class MicroTerm
 {
 private:
     Stream &serial;
-    int led;
 
     static const size_t in_size = 256;
+    char prompt_text[8] = {0};
     char command[in_size] = {0};
     char in[in_size] = {0};
     size_t in_count = 0;
@@ -23,16 +23,9 @@ private:
     void prompt();
     void overflow();
     size_t print(char);
-    void blink()
-    {
-        led_state = (led_state == LOW) ? HIGH : LOW;
-        digitalWrite(led, led_state);
-    }
 
 public:
-    char prefix[128] = {0};
-
-    MicroTerm(Stream &serial, int led) : serial(serial), led(led) {}
+    MicroTerm(Stream &serial) : serial(serial) {}
     ~MicroTerm() {}
 
     void setup(const char *p);
