@@ -43,8 +43,8 @@ public:
     const char *get();
     size_t print(char);
     size_t println(const char *);
-    size_t println(const __FlashStringHelper *ifsh);
-    size_t print(const char *s);
-    size_t print(const __FlashStringHelper *s);
+    size_t println(const __FlashStringHelper *);
+    size_t print(const char *);
+    size_t print(const __FlashStringHelper *);
     void user(bool on) { user_on = on; }
 };

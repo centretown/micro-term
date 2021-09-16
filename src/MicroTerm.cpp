@@ -77,12 +77,12 @@ size_t MicroTerm::print(const char *s)
 
 size_t MicroTerm::println(const __FlashStringHelper *s)
 {
-    return prt(s, false);
+    return prt(s, true);
 }
 
 size_t MicroTerm::println(const char *s)
 {
-    return prt(s, false);
+    return prt(s, true);
 }
 
 bool MicroTerm::ready()
