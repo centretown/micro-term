@@ -13,7 +13,7 @@ void MicroTerm::setup(const char *prefix)
     const char *pre = prefix + len - 3;
     strncpy(prompt_text, pre, sizeof(prompt_text));
     strncat(prompt_text, "> ", sizeof(prompt_text));
-    serial.flush();
+    stream.flush();
 }
 
 void MicroTerm::reset()
@@ -44,49 +44,54 @@ void MicroTerm::overflow()
     }
 }
 
-size_t MicroTerm::print(char c)
+template <class T>
+size_t MicroTerm::prt(T s, bool newline)
 {
     size_t res = 0;
-    if (serial.availableForWrite())
+    if (stream.availableForWrite())
     {
         res = 1;
-        serial.print(c);
-        serial.flush();
+        stream.print(s);
+        if (newline) {
+            stream.println();
+        }
+        stream.flush();
     }
     return res;
+}
+
+size_t MicroTerm::print(char c)
+{
+    return prt(c, false);
+}
+
+size_t MicroTerm::print(const __FlashStringHelper *s)
+{
+    return prt(s, false);
 }
 
 size_t MicroTerm::print(const char *s)
 {
-    size_t res = 0;
-    if (serial.availableForWrite())
-    {
-        res = 1;
-        serial.print(s);
-        serial.flush();
-    }
-    return res;
+    return prt(s, false);
+}
+
+size_t MicroTerm::println(const __FlashStringHelper *s)
+{
+    return prt(s, false);
 }
 
 size_t MicroTerm::println(const char *s)
 {
-    size_t res = 0;
-    if (serial.availableForWrite())
-    {
-        res = 1;
-        serial.println(s);
-        serial.flush();
-    }
-    return res;
+    return prt(s, false);
 }
 
 bool MicroTerm::ready()
 {
     size_t echo_count = in_count;
     int c = -1;
-    while (serial.available())
+    while (stream.available())
     {
-        c = serial.read();
+        c = stream.read();
         if (c == -1)
         {
             continue;

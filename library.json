@@ -1,6 +1,6 @@
 {
     "name": "micro-term",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "A simple terminal program for arduino framework",
     "keywords": "simple terminal",
     "repository": {
@@ -11,12 +11,12 @@
         {
             "name": "Dave Marsh",
             "email": "davemarsh77@gmail.com",
-            "url": "",
+            "url": "https://github.com/centretown",
             "maintainer": true
         }
     ],
     "license": "MIT",
-    "homepage": "https://github.com/centretown",
+    "homepage": "https://github.com/centretown/micro-term",
     "dependencies": {
     },
     "frameworks": "arduino",

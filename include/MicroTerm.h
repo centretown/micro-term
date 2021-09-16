@@ -6,7 +6,7 @@
 class MicroTerm
 {
 private:
-    Stream &serial;
+    Stream &stream;
     char *in;
     size_t in_size;
 
@@ -22,12 +22,14 @@ private:
     void reset();
     void prompt();
     void overflow();
-    size_t print(char);
+
+    template <class T>
+    size_t prt(T p, bool newline);
 
 public:
-    MicroTerm(Stream &serial,
+    MicroTerm(Stream &stream,
               char *in,
-              size_t in_size) : serial(serial),
+              size_t in_size) : stream(stream),
                                 in(in),
                                 in_size(in_size)
     {
@@ -39,7 +41,10 @@ public:
 
     bool ready();
     const char *get();
+    size_t print(char);
     size_t println(const char *);
+    size_t println(const __FlashStringHelper *ifsh);
     size_t print(const char *s);
+    size_t print(const __FlashStringHelper *s);
     void user(bool on) { user_on = on; }
 };
